@@ -1,0 +1,251 @@
+{
+  "name": "seguro",
+  "displayName": "Seguro - Security-First AI Coding Agent",
+  "description": "The security-first AI pair programmer that helps developers write secure, correct, and context-aware code",
+  "version": "0.1.0",
+  "publisher": "seguro-ai",
+  "icon": "assets/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seguro-ai/seguro-vscode"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Linters",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "ai",
+    "security",
+    "copilot",
+    "code-completion",
+    "vulnerability",
+    "secure-coding"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "seguro.login",
+        "title": "Login to Seguro",
+        "category": "Seguro"
+      },
+      {
+        "command": "seguro.logout",
+        "title": "Logout from Seguro",
+        "category": "Seguro"
+      },
+      {
+        "command": "seguro.analyzeFile",
+        "title": "Analyze Current File for Security Issues",
+        "category": "Seguro",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "seguro.scanWorkspace",
+        "title": "Scan Workspace for Security Issues",
+        "category": "Seguro",
+        "icon": "$(search)"
+      },
+      {
+        "command": "seguro.generateSecureCode",
+        "title": "Generate Secure Code from Spec",
+        "category": "Seguro",
+        "icon": "$(wand)"
+      },
+      {
+        "command": "seguro.fixVulnerability",
+        "title": "Fix Security Vulnerability",
+        "category": "Seguro",
+        "icon": "$(wrench)"
+      },
+      {
+        "command": "seguro.openChat",
+        "title": "Ask Seguro",
+        "category": "Seguro",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "seguro.toggleInlineCompletions",
+        "title": "Toggle Inline Completions",
+        "category": "Seguro"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "seguro.analyzeFile",
+          "when": "editorTextFocus",
+          "group": "seguro@1"
+        },
+        {
+          "command": "seguro.generateSecureCode",
+          "when": "editorHasSelection",
+          "group": "seguro@2"
+        },
+        {
+          "command": "seguro.fixVulnerability",
+          "when": "seguro.hasVulnerabilities",
+          "group": "seguro@3"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "seguro.analyzeFile",
+          "when": "resourceExtname =~ /\\.(js|ts|jsx|tsx|py|java|cs|cpp|c|php|rb|go|rs)$/",
+          "group": "seguro@1"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "seguro.analyzeFile",
+          "when": "resourceExtname =~ /\\.(js|ts|jsx|tsx|py|java|cs|cpp|c|php|rb|go|rs)$/",
+          "group": "navigation@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "seguro.fixVulnerability",
+          "when": "seguro.hasVulnerabilities"
+        }
+      ]
+    },
+    "views": {
+      "seguro-sidebar": [
+        {
+          "id": "seguro.chat",
+          "name": "Ask Seguro",
+          "when": "seguro.authenticated",
+          "icon": "$(comment-discussion)"
+        },
+        {
+          "id": "seguro.vulnerabilities",
+          "name": "Security Issues",
+          "when": "seguro.authenticated",
+          "icon": "$(warning)"
+        },
+        {
+          "id": "seguro.history",
+          "name": "Scan History",
+          "when": "seguro.authenticated",
+          "icon": "$(history)"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "seguro-sidebar",
+          "title": "Seguro",
+          "icon": "$(shield)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Seguro",
+      "properties": {
+        "seguro.enableAutoScan": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic security scanning on file save"
+        },
+        "seguro.enableInlineCompletions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable AI-powered inline code completions"
+        },
+        "seguro.severity": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "default": "medium",
+          "description": "Minimum severity level for security warnings"
+        },
+        "seguro.apiEndpoint": {
+          "type": "string",
+          "default": "https://api.seguro.ai",
+          "description": "Seguro API endpoint URL"
+        },
+        "seguro.enableTelemetry": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable anonymous usage telemetry (opt-in)"
+        },
+        "seguro.maxContextLines": {
+          "type": "number",
+          "default": 100,
+          "minimum": 10,
+          "maximum": 500,
+          "description": "Maximum number of context lines to send for analysis"
+        },
+        "seguro.securityRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "xss",
+            "sql-injection",
+            "hardcoded-secrets",
+            "insecure-random",
+            "path-traversal"
+          ],
+          "description": "Security rules to enable for scanning"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "seguro.openChat",
+        "key": "ctrl+shift+s",
+        "mac": "cmd+shift+s",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "seguro.analyzeFile",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/keytar": "^4.4.0",
+    "@types/node": "18.x",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "@vscode/test-electron": "^2.3.4",
+    "@vscode/vsce": "^2.19.0",
+    "eslint": "^8.47.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.2",
+    "axios": "^1.10.0",
+    "jsonwebtoken": "^9.0.2",
+    "keytar": "^7.9.0",
+    "semver": "^7.5.4",
+    "uuid": "^9.0.1"
+  }
+}
