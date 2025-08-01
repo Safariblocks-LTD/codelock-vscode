@@ -69,7 +69,7 @@
 1. **Clone the repository**
    ```bash
    git clone https://github.com/your-org/seguro-vscode.git
-   cd seguro-vscode
+   cd codelock-vscode
    ```
 
 2. **Install dependencies**
