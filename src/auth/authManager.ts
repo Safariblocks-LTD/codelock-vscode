@@ -10,7 +10,7 @@ export interface AuthToken {
 }
 
 export class AuthManager {
-    private static readonly SERVICE_NAME = 'seguro-vscode';
+    private static readonly SERVICE_NAME = 'codelock-vscode';
     private static readonly TOKEN_KEY = 'auth-token';
     private context: vscode.ExtensionContext;
     private currentToken: AuthToken | null = null;
@@ -102,15 +102,15 @@ export class AuthManager {
     }
 
     private buildAuthUrl(sessionId: string): string {
-        const config = vscode.workspace.getConfiguration('seguro');
-        const apiEndpoint = config.get('apiEndpoint', 'https://api.seguro.ai');
+        const config = vscode.workspace.getConfiguration('codelock');
+        const apiEndpoint = config.get('apiEndpoint', 'https://api.codelock.ai');
         
         const params = new URLSearchParams({
-            client_id: 'seguro-vscode',
+            client_id: 'codelock-vscode',
             response_type: 'code',
             scope: 'read write',
             state: sessionId,
-            redirect_uri: 'vscode://seguro-ai.seguro/auth-callback'
+            redirect_uri: 'vscode://codelock-ai.codelock/auth-callback'
         });
 
         return `${apiEndpoint}/auth/authorize?${params.toString()}`;
@@ -167,8 +167,8 @@ export class AuthManager {
     }
 
     private async exchangeCodeForToken(code: string): Promise<AuthToken> {
-        const config = vscode.workspace.getConfiguration('seguro');
-        const apiEndpoint = config.get('apiEndpoint', 'https://api.seguro.ai');
+        const config = vscode.workspace.getConfiguration('codelock');
+        const apiEndpoint = config.get('apiEndpoint', 'https://api.codelock.ai');
 
         const response = await fetch(`${apiEndpoint}/auth/token`, {
             method: 'POST',
@@ -178,8 +178,8 @@ export class AuthManager {
             body: JSON.stringify({
                 grant_type: 'authorization_code',
                 code: code,
-                client_id: 'seguro-vscode',
-                redirect_uri: 'vscode://seguro-ai.seguro/auth-callback'
+                client_id: 'codelock-vscode',
+                redirect_uri: 'vscode://codelock-ai.codelock/auth-callback'
             })
         });
 
@@ -198,8 +198,8 @@ export class AuthManager {
     }
 
     private async refreshToken(refreshToken: string): Promise<AuthToken> {
-        const config = vscode.workspace.getConfiguration('seguro');
-        const apiEndpoint = config.get('apiEndpoint', 'https://api.seguro.ai');
+        const config = vscode.workspace.getConfiguration('codelock');
+        const apiEndpoint = config.get('apiEndpoint', 'https://api.codelock.ai');
 
         const response = await fetch(`${apiEndpoint}/auth/token`, {
             method: 'POST',
@@ -209,7 +209,7 @@ export class AuthManager {
             body: JSON.stringify({
                 grant_type: 'refresh_token',
                 refresh_token: refreshToken,
-                client_id: 'seguro-vscode'
+                client_id: 'codelock-vscode'
             })
         });
 
@@ -228,8 +228,8 @@ export class AuthManager {
     }
 
     private async revokeToken(accessToken: string): Promise<void> {
-        const config = vscode.workspace.getConfiguration('seguro');
-        const apiEndpoint = config.get('apiEndpoint', 'https://api.seguro.ai');
+        const config = vscode.workspace.getConfiguration('codelock');
+        const apiEndpoint = config.get('apiEndpoint', 'https://api.codelock.ai');
 
         await fetch(`${apiEndpoint}/auth/revoke`, {
             method: 'POST',

@@ -1,13 +1,13 @@
 {
-  "name": "seguro",
-  "displayName": "Seguro - Security-First AI Coding Agent",
-  "description": "The security-first AI pair programmer that helps developers write secure, correct, and context-aware code",
+  "name": "codelock",
+  "displayName": "CodeLock - Security-First AI Coding Agent",
+  "description": "The security-first AI pair programmer that helps developers write secure, correct, and context-aware code with built-in security scanning",
   "version": "0.1.0",
-  "publisher": "seguro-ai",
+  "publisher": "codelock-ai",
   "icon": "assets/icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/seguro-ai/seguro-vscode"
+    "url": "https://github.com/codelock-ai/codelock-vscode"
   },
   "engines": {
     "vscode": "^1.74.0"
@@ -32,108 +32,120 @@
   "contributes": {
     "commands": [
       {
-        "command": "seguro.login",
-        "title": "Login to Seguro",
-        "category": "Seguro"
+        "command": "codelock.login",
+        "title": "Login to CodeLock",
+        "category": "CodeLock"
       },
       {
-        "command": "seguro.logout",
-        "title": "Logout from Seguro",
-        "category": "Seguro"
+        "command": "codelock.logout",
+        "title": "Logout from CodeLock",
+        "category": "CodeLock"
       },
       {
-        "command": "seguro.analyzeFile",
+        "command": "codelock.analyzeFile",
         "title": "Analyze Current File for Security Issues",
-        "category": "Seguro",
+        "category": "CodeLock",
         "icon": "$(shield)"
       },
       {
-        "command": "seguro.scanWorkspace",
+        "command": "codelock.scanWorkspace",
         "title": "Scan Workspace for Security Issues",
-        "category": "Seguro",
+        "category": "CodeLock",
         "icon": "$(search)"
       },
       {
-        "command": "seguro.generateSecureCode",
-        "title": "Generate Secure Code from Spec",
-        "category": "Seguro",
+        "command": "codelock.generateSecureCode",
+        "title": "Generate Secure Code",
+        "category": "CodeLock",
         "icon": "$(wand)"
       },
       {
-        "command": "seguro.fixVulnerability",
+        "command": "codelock.fixVulnerability",
         "title": "Fix Security Vulnerability",
-        "category": "Seguro",
+        "category": "CodeLock",
         "icon": "$(wrench)"
       },
       {
-        "command": "seguro.openChat",
-        "title": "Ask Seguro",
-        "category": "Seguro",
+        "command": "codelock.openChat",
+        "title": "Open CodeLock Chat",
+        "category": "CodeLock",
         "icon": "$(comment-discussion)"
       },
       {
-        "command": "seguro.toggleInlineCompletions",
-        "title": "Toggle Inline Completions",
-        "category": "Seguro"
+        "command": "codelock.toggleInlineCompletions",
+        "title": "Toggle Inline Code Completions",
+        "category": "CodeLock"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "seguro.analyzeFile",
+          "command": "codelock.analyzeFile",
           "when": "editorTextFocus",
-          "group": "seguro@1"
+          "group": "codelock@1"
         },
         {
-          "command": "seguro.generateSecureCode",
+          "command": "codelock.generateSecureCode",
           "when": "editorHasSelection",
-          "group": "seguro@2"
+          "group": "codelock@2"
         },
         {
-          "command": "seguro.fixVulnerability",
-          "when": "seguro.hasVulnerabilities",
-          "group": "seguro@3"
+          "command": "codelock.fixVulnerability",
+          "when": "false",
+          "group": "codelock@3"
         }
       ],
       "explorer/context": [
         {
-          "command": "seguro.analyzeFile",
+          "command": "codelock.analyzeFile",
           "when": "resourceExtname =~ /\\.(js|ts|jsx|tsx|py|java|cs|cpp|c|php|rb|go|rs)$/",
-          "group": "seguro@1"
+          "group": "codelock@1"
         }
       ],
       "editor/title": [
         {
-          "command": "seguro.analyzeFile",
+          "command": "codelock.analyzeFile",
           "when": "resourceExtname =~ /\\.(js|ts|jsx|tsx|py|java|cs|cpp|c|php|rb|go|rs)$/",
           "group": "navigation@1"
         }
       ],
       "commandPalette": [
         {
-          "command": "seguro.fixVulnerability",
-          "when": "seguro.hasVulnerabilities"
+          "command": "codelock.fixVulnerability",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "codelock.scanWorkspace",
+          "when": "view == codelock.vulnerabilities",
+          "group": "navigation"
+        },
+        {
+          "command": "codelock.openChat",
+          "when": "view == codelock.chat",
+          "group": "navigation"
         }
       ]
     },
     "views": {
-      "seguro-sidebar": [
+      "codelock-sidebar": [
         {
-          "id": "seguro.chat",
-          "name": "Ask Seguro",
-          "when": "seguro.authenticated",
+          "id": "codelock.chat",
+          "name": "Ask CodeLock",
+          "when": "codelock.authenticated",
           "icon": "$(comment-discussion)"
         },
         {
-          "id": "seguro.vulnerabilities",
+          "id": "codelock.vulnerabilities",
           "name": "Security Issues",
-          "when": "seguro.authenticated",
+          "when": "codelock.authenticated",
           "icon": "$(warning)"
         },
         {
-          "id": "seguro.history",
+          "id": "codelock.history",
           "name": "Scan History",
-          "when": "seguro.authenticated",
+          "when": "codelock.authenticated",
           "icon": "$(history)"
         }
       ]
@@ -141,26 +153,26 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "seguro-sidebar",
-          "title": "Seguro",
+          "id": "codelock-sidebar",
+          "title": "CodeLock",
           "icon": "$(shield)"
         }
       ]
     },
     "configuration": {
-      "title": "Seguro",
+      "title": "CodeLock",
       "properties": {
-        "seguro.enableAutoScan": {
+        "codelock.enableAutoScan": {
           "type": "boolean",
           "default": true,
           "description": "Enable automatic security scanning on file save"
         },
-        "seguro.enableInlineCompletions": {
+        "codelock.enableInlineCompletions": {
           "type": "boolean",
           "default": true,
           "description": "Enable AI-powered inline code completions"
         },
-        "seguro.severity": {
+        "codelock.severity": {
           "type": "string",
           "enum": [
             "low",
@@ -170,24 +182,24 @@
           "default": "medium",
           "description": "Minimum severity level for security warnings"
         },
-        "seguro.apiEndpoint": {
+        "codelock.apiEndpoint": {
           "type": "string",
-          "default": "https://api.seguro.ai",
-          "description": "Seguro API endpoint URL"
+          "default": "https://api.codelock.ai",
+          "description": "CodeLock API endpoint URL"
         },
-        "seguro.enableTelemetry": {
+        "codelock.enableTelemetry": {
           "type": "boolean",
           "default": false,
           "description": "Enable anonymous usage telemetry (opt-in)"
         },
-        "seguro.maxContextLines": {
+        "codelock.maxContextLines": {
           "type": "number",
           "default": 100,
           "minimum": 10,
           "maximum": 500,
           "description": "Maximum number of context lines to send for analysis"
         },
-        "seguro.securityRules": {
+        "codelock.securityRules": {
           "type": "array",
           "items": {
             "type": "string"
@@ -205,15 +217,15 @@
     },
     "keybindings": [
       {
-        "command": "seguro.openChat",
-        "key": "ctrl+shift+s",
-        "mac": "cmd+shift+s",
+        "command": "codelock.openChat",
+        "key": "ctrl+shift+l",
+        "mac": "cmd+shift+l",
         "when": "editorTextFocus"
       },
       {
-        "command": "seguro.analyzeFile",
-        "key": "ctrl+shift+a",
-        "mac": "cmd+shift+a",
+        "command": "codelock.toggleInlineCompletions",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
         "when": "editorTextFocus"
       }
     ]

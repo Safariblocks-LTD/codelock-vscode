@@ -1,6 +1,6 @@
-# 🛡️ Seguro - Security-First AI Coding Assistant
+# 🔒 CodeLock - Security-First AI Coding Assistant
 
-**Seguro** is a world-class, security-first AI coding assistant delivered as a VS Code extension. It provides secure-by-default code suggestions, real-time vulnerability detection, spec-based code generation, and an intelligent chat interface - all powered by a secure cloud architecture.
+**CodeLock** is a world-class, security-first AI coding assistant delivered as a VS Code extension. It provides secure-by-default code suggestions, real-time vulnerability detection, spec-based code generation, and an intelligent chat interface - all powered by a secure cloud architecture.
 
 ## ✨ Key Features
 
@@ -16,7 +16,7 @@
 - Secure-by-default coding patterns
 - Debounced completions to optimize performance
 
-### 💬 **"Ask Seguro" Chat Interface**
+### 💬 **"Ask CodeLock" Chat Interface**
 - Dedicated sidebar chat for security questions
 - Context-aware responses based on current file
 - Code generation from natural language specs
@@ -141,10 +141,10 @@ Access via VS Code Settings (`Ctrl+,`) → Search "Seguro":
 ### Advanced Settings
 ```json
 {
-  "seguro.completion.debounceMs": 300,
-  "seguro.completion.maxSuggestions": 3,
-  "seguro.scan.batchSize": 10,
-  "seguro.scan.excludePatterns": ["node_modules/**", "*.min.js"],
+  "codelock.completion.debounceMs": 300,
+  "codelock.completion.maxSuggestions": 3,
+  "codelock.scan.batchSize": 10,
+  "codelock.scan.excludePatterns": ["node_modules/**", "*.min.js"],
   "seguro.telemetry.sessionTimeout": 3600000
 }
 ```

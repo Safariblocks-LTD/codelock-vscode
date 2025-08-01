@@ -22,7 +22,7 @@ export class TelemetryManager {
 
         // Listen for configuration changes
         vscode.workspace.onDidChangeConfiguration((e) => {
-            if (e.affectsConfiguration('seguro.enableTelemetry')) {
+            if (e.affectsConfiguration('codelock.enableTelemetry')) {
                 this.updateTelemetrySettings();
             }
         });
@@ -163,7 +163,7 @@ export class TelemetryManager {
         try {
             // In a real implementation, you would send these to your telemetry service
             // For now, we'll just log them in development mode
-            const config = vscode.workspace.getConfiguration('seguro');
+            const config = vscode.workspace.getConfiguration('codelock');
             const isDevelopment = config.get('apiEndpoint', '').includes('localhost');
             
             if (isDevelopment) {

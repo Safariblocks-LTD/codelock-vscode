@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { ApiClient, ChatRequest, ChatMessage } from '../api/apiClient';
 
 export class ChatProvider implements vscode.WebviewViewProvider {
-    public static readonly viewType = 'seguro.chat';
+    public static readonly viewType = 'Codelock.chat';
     private _view?: vscode.WebviewView;
     private context: vscode.ExtensionContext;
     private apiClient: ApiClient;
@@ -83,7 +83,7 @@ export class ChatProvider implements vscode.WebviewViewProvider {
             };
 
             // Get response from API
-            const response = await this.apiClient.chatWithSeguro(chatRequest);
+            const response = await this.apiClient.chatWithcodelock(chatRequest);
 
             // Add assistant response to history
             const assistantMessage: ChatMessage = {
@@ -159,7 +159,7 @@ export class ChatProvider implements vscode.WebviewViewProvider {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ask Seguro</title>
+    <title>Ask CodeLock</title>
     <style>
         body {
             font-family: var(--vscode-font-family);
@@ -309,21 +309,21 @@ export class ChatProvider implements vscode.WebviewViewProvider {
     
     <div class="chat-container" id="chatContainer">
         <div class="welcome-message">
-            <h3>🛡️ Ask Seguro</h3>
+            <h3>🛡️ Ask Codelock</h3>
             <p>Your security-first AI coding assistant</p>
             <p>Ask me about security best practices, code vulnerabilities, or get help with secure coding patterns.</p>
         </div>
     </div>
     
     <div class="typing-indicator" id="typingIndicator">
-        Seguro is thinking...
+        Codelock is thinking...
     </div>
     
     <div class="input-container">
         <textarea 
             class="message-input" 
             id="messageInput" 
-            placeholder="Ask Seguro about security, vulnerabilities, or coding best practices..."
+            placeholder="Ask Codelock about security, vulnerabilities, or coding best practices..."
             rows="1"
         ></textarea>
         <button class="send-button" id="sendButton">Send</button>
@@ -433,7 +433,7 @@ export class ChatProvider implements vscode.WebviewViewProvider {
         function clearMessages() {
             chatContainer.innerHTML = \`
                 <div class="welcome-message">
-                    <h3>🛡️ Ask Seguro</h3>
+                    <h3>🛡️ Ask Codelock</h3>
                     <p>Your security-first AI coding assistant</p>
                     <p>Ask me about security best practices, code vulnerabilities, or get help with secure coding patterns.</p>
                 </div>

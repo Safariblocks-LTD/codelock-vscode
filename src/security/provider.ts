@@ -6,8 +6,8 @@ export class SecurityProvider {
     private outputChannel: vscode.OutputChannel;
 
     constructor(private analyzer: SecurityAnalyzer) {
-        this.diagnosticCollection = vscode.languages.createDiagnosticCollection('seguro');
-        this.outputChannel = vscode.window.createOutputChannel('Seguro Security');
+        this.diagnosticCollection = vscode.languages.createDiagnosticCollection('codelock');
+        this.outputChannel = vscode.window.createOutputChannel('Codelock Security');
     }
 
     showResults(issues: SecurityIssue[]): void {
@@ -64,7 +64,7 @@ export class SecurityProvider {
             );
 
             diagnostic.code = issue.rule;
-            diagnostic.source = 'Seguro';
+            diagnostic.source = 'codelock';
 
             if (issue.suggestion) {
                 diagnostic.relatedInformation = [

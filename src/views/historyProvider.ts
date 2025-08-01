@@ -198,7 +198,7 @@ export class HistoryProvider implements vscode.TreeDataProvider<HistoryTreeItem>
 
     private loadHistory(): void {
         try {
-            const savedHistory = this.context.globalState.get<HistoryItem[]>('seguro.history', []);
+            const savedHistory = this.context.globalState.get<HistoryItem[]>('codelock.history', []);
             // Convert timestamp strings back to Date objects
             this.history = savedHistory.map(item => ({
                 ...item,
@@ -212,7 +212,7 @@ export class HistoryProvider implements vscode.TreeDataProvider<HistoryTreeItem>
 
     private saveHistory(): void {
         try {
-            this.context.globalState.update('seguro.history', this.history);
+            this.context.globalState.update('codelock.history', this.history);
         } catch (error) {
             console.error('Failed to save history:', error);
         }
@@ -221,7 +221,7 @@ export class HistoryProvider implements vscode.TreeDataProvider<HistoryTreeItem>
     private registerCommands(): void {
         // Command to show history item details
         const showHistoryDetailsCommand = vscode.commands.registerCommand(
-            'seguro.showHistoryDetails',
+            'codelock.showHistoryDetails',
             async (item: HistoryItem) => {
                 const panel = vscode.window.createWebviewPanel(
                     'historyDetails',
@@ -238,7 +238,7 @@ export class HistoryProvider implements vscode.TreeDataProvider<HistoryTreeItem>
 
         // Command to clear history
         const clearHistoryCommand = vscode.commands.registerCommand(
-            'seguro.clearHistory',
+            'codelock.clearHistory',
             async () => {
                 const result = await vscode.window.showWarningMessage(
                     'Are you sure you want to clear all history?',
@@ -258,10 +258,10 @@ export class HistoryProvider implements vscode.TreeDataProvider<HistoryTreeItem>
 
         // Command to export history
         const exportHistoryCommand = vscode.commands.registerCommand(
-            'seguro.exportHistory',
+            'codelock.exportHistory',
             async () => {
                 const uri = await vscode.window.showSaveDialog({
-                    defaultUri: vscode.Uri.file('seguro-history.json'),
+                    defaultUri: vscode.Uri.file('codelock-history.json'),
                     filters: {
                         'JSON files': ['json']
                     }
@@ -281,7 +281,7 @@ export class HistoryProvider implements vscode.TreeDataProvider<HistoryTreeItem>
 
         // Command to remove specific history item
         const removeHistoryItemCommand = vscode.commands.registerCommand(
-            'seguro.removeHistoryItem',
+            'codelock.removeHistoryItem',
             async (item: HistoryTreeItem) => {
                 this.history = this.history.filter(h => h.id !== item.historyItem.id);
                 this.saveHistory();

@@ -78,7 +78,7 @@ export class InlineCompletionProvider implements vscode.InlineCompletionItemProv
                 
                 // Add security-focused command for the completion
                 item.command = {
-                    command: 'seguro.acceptCompletion',
+                    command: 'codelock.acceptCompletion',
                     title: 'Accept Secure Completion',
                     arguments: [completion, fileContext.language]
                 };
@@ -144,13 +144,13 @@ export class InlineCompletionProvider implements vscode.InlineCompletionItemProv
     // Register command to track completion acceptance
     static registerCommands(context: vscode.ExtensionContext): void {
         const acceptCompletionCommand = vscode.commands.registerCommand(
-            'seguro.acceptCompletion',
+            'codelock.acceptCompletion',
             (completion: string, language: string) => {
                 // Track completion acceptance for telemetry
                 console.log(`Accepted completion for ${language}: ${completion.substring(0, 50)}...`);
                 
                 // Could send telemetry here if enabled
-                const config = vscode.workspace.getConfiguration('seguro');
+                const config = vscode.workspace.getConfiguration('codelock');
                 if (config.get('enableTelemetry', false)) {
                     // Send anonymous telemetry about completion acceptance
                 }

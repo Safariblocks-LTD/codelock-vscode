@@ -72,15 +72,15 @@ export class ApiClient {
     constructor(authManager: AuthManager) {
         this.authManager = authManager;
         
-        const config = vscode.workspace.getConfiguration('seguro');
-        const apiEndpoint = config.get('apiEndpoint', 'https://api.seguro.ai');
+        const config = vscode.workspace.getConfiguration('codelock');
+        const apiEndpoint = config.get('apiEndpoint', 'https://api.codelock.ai');
 
         this.client = axios.create({
             baseURL: apiEndpoint,
             timeout: 30000,
             headers: {
                 'Content-Type': 'application/json',
-                'User-Agent': 'Seguro-VSCode/0.1.0',
+                'User-Agent': 'Codelock-VSCode/0.1.0',
             },
         });
 
@@ -102,7 +102,7 @@ export class ApiClient {
                     const token = await this.authManager.getValidToken();
                     if (!token) {
                         vscode.window.showErrorMessage('Authentication expired. Please login again.');
-                        await vscode.commands.executeCommand('seguro.login');
+                        await vscode.commands.executeCommand('codelock.login');
                     }
                 }
                 return Promise.reject(error);
@@ -116,7 +116,7 @@ export class ApiClient {
         cancelToken?: CancelToken
     ): Promise<SecurityIssue[]> {
         try {
-            const config = vscode.workspace.getConfiguration('seguro');
+            const config = vscode.workspace.getConfiguration('codelock');
             const securityRules = config.get('securityRules', [
                 'xss', 'sql-injection', 'hardcoded-secrets', 'insecure-random', 'path-traversal'
             ]);
@@ -145,7 +145,7 @@ export class ApiClient {
         cancelToken?: CancelToken
     ): Promise<CompletionResponse> {
         try {
-            const config = vscode.workspace.getConfiguration('seguro');
+            const config = vscode.workspace.getConfiguration('codelock');
             const maxTokens = config.get('maxContextLines', 100);
 
             const response = await this.client.post('/complete', {
@@ -212,7 +212,7 @@ export class ApiClient {
         }
     }
 
-    async chatWithSeguro(
+    async chatWithcodelock(
         request: ChatRequest,
         cancelToken?: CancelToken
     ): Promise<ChatResponse> {
@@ -239,7 +239,7 @@ export class ApiClient {
         onProgress?: (progress: number, file: string) => void
     ): Promise<SecurityIssue[]> {
         try {
-            const config = vscode.workspace.getConfiguration('seguro');
+            const config = vscode.workspace.getConfiguration('codelock');
             const securityRules = config.get('securityRules', [
                 'xss', 'sql-injection', 'hardcoded-secrets', 'insecure-random', 'path-traversal'
             ]);
